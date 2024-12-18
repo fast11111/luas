@@ -12,6 +12,33 @@ local CoreGui = RunService:IsStudio() and Players.LocalPlayer.PlayerGui or clone
 --/ game things
 local Camera = Workspace.CurrentCamera
 
+--/ custom font
+local fontLink = 'https://github.com/fast11111/fonts/raw/refs/heads/main/Tahoma.ttf'
+local loadedFont = nil
+if not isfile('drain_font.ttf') then
+    local success, data = pcall(function() return game:HttpGet(fontLink) end)
+
+    if success and data then
+        writefile('drain_font.ttf', data)
+    end
+end
+
+if not isfile('drain_font.json') then
+    local font = {
+        name = 'drain_font',
+        faces = {{
+            name = "Regular",
+            weight = 400,
+            style = "normal",
+            assetId = getcustomasset('drain_font.ttf')
+        }}
+    }
+
+    writefile('drain_font.json', HttpService:JSONEncode(font))
+end
+
+loadedFont = Font.new(getcustomasset('drain_font.json'), Enum.FontWeight.Regular)
+
 local library = {
 	['themes'] = {
 		['activeMap'] = {
@@ -286,7 +313,7 @@ local library = {
 		end
 	end,
 
-	['font'] = {font = Font.new('rbxasset://fonts/families/SpecialElite.json', Enum.FontWeight.Regular), size = 12},
+	['font'] = {font = loadedFont, size = 12},
 }
 
 do --/ library
