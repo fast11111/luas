@@ -227,22 +227,6 @@ local library = {
 	['flags'] = {},
 	['config'] = {},
 	['glowObjects'] = {},
-	
-	['toEnum'] = function(entry) -- from office's ui
-		local enumParts = {}
-		for part in string.gmatch(entry, "[%w_]+") do
-			table.insert(enumParts, part)
-		end
-
-		local enumTable = Enum
-		for i = 2, #enumParts do
-			local enumItem = enumTable[enumParts[i]]
-
-			enumTable = enumItem
-		end
-
-		return enumTable
-	end,
 
 	['create'] = function(className, properties, keypoints)
 		local instance = Instance.new(className)
@@ -3590,7 +3574,22 @@ do --/ library
 				end
 			elseif type(entry) == 'table' then
 				if entry.key and entry.mode then
-					entry.key = type(entry.key) == 'string' and entry.key ~= 'none' and library:toEnum(entry.key) or entry.key
+					local function toEnum(entry) -- from office's ui
+						local enumParts = {}
+						for part in string.gmatch(entry, "[%w_]+") do
+							table.insert(enumParts, part)
+						end
+				
+						local enumTable = Enum
+						for i = 2, #enumParts do
+							local enumItem = enumTable[enumParts[i]]
+				
+							enumTable = enumItem
+						end
+						return enumTable
+					end
+
+					entry.key = type(entry.key) == 'string' and entry.key ~= 'none' and toEnum('Enum.KeyCode.A') or entry.key
 
 					keypicker.key = entry.key
 					keypicker.mode = entry.mode
