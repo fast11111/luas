@@ -560,7 +560,8 @@ do --/ library
 			prefix = config.prefix or '',
 			suffix = config.suffix or '',
 			visible = config.visible == nil and true or config.visible,
-			usetabs = config.usetabs == nil and true or config.usetabs
+			usetabs = config.usetabs == nil and true or config.usetabs,
+			position = config.position or nil
 		}
 
 		local window = {
@@ -578,7 +579,7 @@ do --/ library
 
 		local holder = library.create('ImageButton', {
 			Size = config.size,
-			Position = UDim2.fromOffset(Camera.ViewportSize.X / 2 - (config.size.X.Offset / 2), Camera.ViewportSize.Y / 2 - (config.size.Y.Offset / 2)),
+			Position = config.position or UDim2.fromOffset(Camera.ViewportSize.X / 2 - (config.size.X.Offset / 2), Camera.ViewportSize.Y / 2 - (config.size.Y.Offset / 2)),
 			Image = '',
 			BackgroundColor3 = library.themes.activeMap.outline,
 			Active = true,
