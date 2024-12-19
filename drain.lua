@@ -3590,7 +3590,7 @@ do --/ library
 						return enumTable
 					end
 
-					entry.key = type(entry.key) == 'string' and entry.key ~= 'none' and toEnum('Enum.KeyCode.A') or entry.key
+					entry.key = type(entry.key) == 'string' and entry.key ~= 'none' and toEnum(entry.key) or entry.key
 
 					keypicker.key = entry.key
 					keypicker.mode = entry.mode
